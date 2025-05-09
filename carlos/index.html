@@ -1,11 +1,222 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark-mode">
 <head>
   <meta charset="UTF-8">
-  <title>Proyecto de Carlos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Observatorio de Cambio Climático - Visualiza y analiza tendencias climáticas en diferentes regiones del mundo">
+  <title>Observatorio de Cambio Climático</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Proyecto de Carlos</h1>
-  <p>Aquí irá el proyecto individual.</p>
+  <header>
+    <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema">🔆</button>
+    <h1>Observatorio de Cambio Climático</h1>
+    <p class="subtitle">Explora y analiza tendencias climáticas en diferentes regiones del mundo</p>
+  </header>
+  
+  <main>
+    <div class="container">
+      <!-- Sección de visualización de datos -->
+      <section id="data-section">
+        <div class="input-container">
+          <div class="input-group">
+            <div class="control-group" id="city1Container">
+              <label for="city1">Ciudad 1:</label>
+              <input type="text" id="city1" placeholder="Ej: Madrid" aria-label="Ingresa primera ciudad">
+            </div>
+            
+            <div class="control-group" id="city2Container">
+              <label for="city2">Ciudad 2:</label>
+              <input type="text" id="city2" placeholder="Ej: Barcelona" aria-label="Ingresa segunda ciudad">
+            </div>
+          </div>
+          
+          <div class="select-group">
+            <div class="control-group">
+              <label for="yearRange">Rango de años:</label>
+              <select id="yearRange" aria-label="Selecciona rango de años">
+                <option value="1980-2023">1980-2023</option>
+                <option value="1990-2023">1990-2023</option>
+                <option value="2000-2023">2000-2023</option>
+                <option value="2010-2023">2010-2023</option>
+              </select>
+            </div>
+            
+            <div class="control-group">
+              <label for="chartMode">Tipo de gráfico:</label>
+              <select id="chartMode" aria-label="Selecciona tipo de gráfico">
+                <option value="bars">Barras</option>
+                <option value="lines">Líneas</option>
+              </select>
+            </div>
+            
+            <div class="control-group">
+              <label for="viewMode">Modo de vista:</label>
+              <select id="viewMode" aria-label="Selecciona modo de vista">
+                <option value="single">Simple</option>
+                <option value="compare">Comparativa</option>
+              </select>
+            </div>
+          </div>
+          
+          <button class="viz-button" id="visualizeBtn" onclick="loadData()">Visualizar datos</button>
+        </div>
+        
+        <div class="chart-container">
+          <!-- El gráfico se dibujará aquí -->
+        </div>
+        
+        <div id="chartLegend" class="legend"></div>
+        
+        <div id="summary" class="summary-box"></div>
+      </section>
+      
+      <!-- Panel de expertos -->
+      <section id="experts-section">
+        <h2>Opiniones de Expertos sobre el Cambio Climático</h2>
+        <div class="experts-container">
+          <div class="expert-card">
+            <div class="expert-header">
+              <div class="expert-avatar">👩‍🔬</div>
+              <div class="expert-info">
+                <h3>Dra. Adelle Thomas</h3>
+                <span class="expert-role">Autora principal del informe del IPCC</span>
+              </div>
+            </div>
+            <blockquote class="expert-quote">
+              "La influencia humana ha calentado incuestionablemente la atmósfera, el océano y la tierra. Los cambios climáticos generalizados y rápidos ya están ocurriendo."
+            </blockquote>
+            <cite>Fuente: Naciones Unidas, 2023</cite>
+          </div>
+          
+          <div class="expert-card">
+            <div class="expert-header">
+              <div class="expert-avatar">👨‍🔬</div>
+              <div class="expert-info">
+                <h3>Dr. Gavin Schmidt</h3>
+                <span class="expert-role">Director del Instituto Goddard de la NASA</span>
+              </div>
+            </div>
+            <blockquote class="expert-quote">
+              "Cada década desde los años 60 ha sido más cálida que la anterior. La ciencia es inequívoca y las evidencias son abrumadoras."
+            </blockquote>
+            <cite>Fuente: NASA Ciencia, 2024</cite>
+          </div>
+          
+          <div class="expert-card">
+            <div class="expert-header">
+              <div class="expert-avatar">👩‍🏫</div>
+              <div class="expert-info">
+                <h3>Dra. Ko Barrett</h3>
+                <span class="expert-role">Secretaria General Adjunta de la OMM</span>
+              </div>
+            </div>
+            <blockquote class="expert-quote">
+              "Las estadísticas revelan la cruda realidad: estamos muy lejos de cumplir los objetivos del Acuerdo de París."
+            </blockquote>
+            <cite>Fuente: Organización Meteorológica Mundial, 2023</cite>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Sección de causas y soluciones -->
+      <section id="climate-info">
+        <div class="info-columns">
+          <div class="info-column">
+            <h2>Causas del cambio climático</h2>
+            <div class="info-content">
+              <div class="info-item">
+                <h3>🏭 Emisiones de gases de efecto invernadero</h3>
+                <p>La quema de combustibles fósiles para energía, transporte e industria libera CO₂ que intensifica el efecto invernadero.</p>
+              </div>
+              <div class="info-item">
+                <h3>🌲 Deforestación</h3>
+                <p>La tala de bosques reduce la capacidad del planeta para absorber CO₂ y libera el carbono almacenado en los árboles.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="info-column">
+            <h2>Soluciones climáticas</h2>
+            <div class="info-content">
+              <div class="info-item">
+                <h3>♻️ Energías renovables</h3>
+                <p>Transición a fuentes como solar, eólica e hidroeléctrica para reducir emisiones de carbono.</p>
+              </div>
+              <div class="info-item">
+                <h3>🌳 Reforestación</h3>
+                <p>Proteger bosques existentes y restaurar ecosistemas degradados para aumentar la captura de carbono.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Sección de estadísticas globales -->
+      <section id="global-stats">
+        <h2>Estadísticas globales del cambio climático</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">+1.1°C</div>
+            <div class="stat-label">Aumento de temperatura global desde era preindustrial</div>
+            <div class="trend-indicator trend-up">↑ Aumentando</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">420 ppm</div>
+            <div class="stat-label">Concentración actual de CO₂ en la atmósfera</div>
+            <div class="trend-indicator trend-up">↑ Récord histórico</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">3.4 mm</div>
+            <div class="stat-label">Aumento anual del nivel del mar</div>
+            <div class="trend-indicator trend-up">↑ Acelerando</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">-13.1%</div>
+            <div class="stat-label">Pérdida de hielo ártico por década</div>
+            <div class="trend-indicator trend-up">↑ Empeorando</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <p>Observatorio de Cambio Climático © 2025 | Datos climáticos: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
+      <p class="eco-badge">🍃 Sitio web desarrollado con principios de sostenibilidad digital</p>
+    </div>
+  </footer>
+
+  <script src="sketch.js"></script>
+  <script>
+    // Variables globales
+    let ready = false;
+    
+    // Alternar entre modo claro y oscuro
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      document.documentElement.classList.toggle('dark-mode');
+      this.textContent = document.documentElement.classList.contains('dark-mode') ? '🔆' : '🌙';
+      if (typeof redraw === 'function' && ready) {
+        redraw();
+      }
+    });
+    
+    // Inicializar - Mostrar/ocultar campo Ciudad 2 según el modo de vista
+    document.addEventListener('DOMContentLoaded', function() {
+      const viewMode = document.getElementById('viewMode');
+      const city2Container = document.getElementById('city2Container');
+      
+      function updateCity2Visibility() {
+        city2Container.style.display = viewMode.value === 'compare' ? 'block' : 'none';
+      }
+      
+      viewMode.addEventListener('change', updateCity2Visibility);
+      
+      // Set initial visibility
+      updateCity2Visibility();
+    });
+  </script>
 </body>
 </html>
