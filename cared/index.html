@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Proyecto de Cared</title>
 
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <script src="libraries/p5.min.js"></script>
+  <script src="libraries/p5.sound.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <script src="sketch.js"></script>
+  <div id="p5"></div>
+  <div id="cuadro">
+    <!--<input type="text" v-model="title">-->
+    <button @click="addText">Frase</button>
+  <!--<div id="nombre">{{title}}</div>-->
+  <div id="p5"></div>
+  <script type="text/javascript"> 
+      
+      var app = new Vue({ 
+        
+        el: '#nombre', 
+      
+        data: { 
+            title: "Cared Castanos"
+        },
+        methods: { 
+          funcion: function () { 
+            console.log(myp5);  
+            myp5.addtext(this.title);
+          }          
+      
+      } 
+  }
+    ); 
+</script> 
+  <!--<h1>Reconocimiento facial</h1>
+  <div id="nombre">Sobre la</div>-->
+</body>
+</html>
