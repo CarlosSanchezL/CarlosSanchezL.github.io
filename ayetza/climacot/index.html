@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIMA | Pronóstico Avanzado</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="fade-in">CLIMA</h1>
+    <div class="subtitulo fade-in">Pronóstico avanzado</div>
+    
+    <div class="linea-dinamica"></div>
+    
+    <div class="busqueda fade-in">
+      <div class="input-container">
+        <input type="text" id="ciudad" placeholder="Introduce ubicación" />
+        <button class="gps-btn" onclick="obtenerUbicacion()">⌖</button>
+      </div>
+      <button onclick="obtenerClima()">Explorar</button>
+    </div>
+    
+    <div class="resultado" id="resultado">
+    </div>
+    
+    <div class="ciudad" id="nombre-ciudad"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.querySelector('.linea-dinamica').style.width = '50%';
+      }, 500);
+    });
+  </script>
+</body>
+</html>
